@@ -6,11 +6,11 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Microsoft JhengHei', 'Segoe UI', Roboto, sans-serif;
-    /* Background is now handled by .background-layer */
+    /* 背景由 .background-layer 處理 */
     padding: 20px;
     line-height: 1.6;
-    color: #f0f0f0; /* Default light text color */
-    overflow-x: hidden; /* Prevent horizontal scrollbar from particles */
+    color: #f0f0f0; /* 預設淺色文字 */
+    overflow-x: hidden; /* 防止粒子動畫產生水平滾動條 */
 }
 
 .background-layer {
@@ -20,8 +20,8 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1; 
-    background: url('bg.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background: url('bg.jpg') no-repeat center center fixed; /* 使用您的背景圖片 */
+    background-size: cover; /* 確保背景圖片填滿並覆蓋整個區域 */
 }
 
 #particle-canvas {
@@ -32,29 +32,29 @@ body {
 
 .container {
     max-width: 800px;
-    margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.65); /* Dark semi-transparent background */
-    backdrop-filter: blur(8px); /* Frosted glass effect */
-    -webkit-backdrop-filter: blur(8px); /* Safari */
+    margin: 40px auto; /* 增加上下邊距，讓內容在垂直方向上更居中一些 */
+    background-color: rgba(0, 0, 0, 0.65); /* 深色半透明背景 */
+    backdrop-filter: blur(8px); /* 毛玻璃效果 */
+    -webkit-backdrop-filter: blur(8px); /* Safari 瀏覽器兼容 */
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
-    position: relative; /* For z-index stacking */
-    z-index: 1;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37); /* 更明顯的陰影效果 */
+    position: relative; /* 用於 z-index 堆疊上下文 */
+    z-index: 1; /* 確保容器在背景層之上 */
 }
 
 h1 {
-    color: #ffffff; /* Light text */
+    color: #ffffff; /* 白色文字 */
     text-align: center;
     margin-bottom: 20px;
     font-size: 2.2em;
     animation: fadeIn 0.8s ease-in-out;
-    text-shadow: 0 0 10px rgba(0, 174, 255, 0.5);
+    text-shadow: 0 0 10px rgba(0, 174, 255, 0.5); /* 藍色光暈效果 */
 }
 
 .subtitle {
     text-align: center;
-    color: #cccccc; /* Light gray text */
+    color: #cccccc; /* 淺灰色文字 */
     margin-bottom: 30px;
     font-size: 0.95em;
 }
@@ -62,16 +62,16 @@ h1 {
 .download-section {
     margin-bottom: 20px;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.08); /* Subtle light semi-transparent */
+    background-color: rgba(255, 255, 255, 0.08); /* 細微的淺色半透明背景 */
     border-radius: 8px;
-    border-left: 4px solid #00aeff; /* Accent blue */
+    border-left: 4px solid #00aeff; /* 強調藍色 */
     transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    opacity: 0; /* For fadeInUp animation */
-    transform: translateY(20px); /* For fadeInUp animation */
-    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0; /* 用於 fadeInUp 動畫 */
+    transform: translateY(20px); /* 用於 fadeInUp 動畫 */
+    animation: fadeInUp 0.5s ease-out forwards; /* 向上滑入動畫 */
 }
 
 @keyframes fadeInUp {
@@ -82,13 +82,13 @@ h1 {
 }
 
 .download-section:hover {
-    transform: translateY(-3px) scale(1.01);
-    box-shadow: 0 6px 20px rgba(0, 174, 255, 0.3);
-    background-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-3px) scale(1.01); /* 懸停時輕微上移並放大 */
+    box-shadow: 0 6px 20px rgba(0, 174, 255, 0.3); /* 懸停時藍色陰影 */
+    background-color: rgba(255, 255, 255, 0.12); /* 懸停時背景更亮一點 */
 }
 
 .download-section h2 {
-    color: #00aeff; /* Accent blue */
+    color: #00aeff; /* 強調藍色 */
     font-size: 1.3em;
     margin-bottom: 10px;
 }
@@ -101,7 +101,7 @@ h1 {
 }
 
 .download-section a {
-    color: #87cefa; /* Light sky blue for links */
+    color: #87cefa; /* 淺天空藍連結顏色 */
     text-decoration: none;
     word-break: break-all;
     flex: 1;
@@ -110,11 +110,11 @@ h1 {
 
 .download-section a:hover {
     text-decoration: underline;
-    color: #ffffff; /* White on hover */
+    color: #ffffff; /* 懸停時變為白色 */
 }
 
 .copy-btn {
-    background-color: #00aeff;
+    background-color: #00aeff; /* 強調藍色按鈕 */
     color: white;
     border: none;
     padding: 8px 15px;
@@ -122,21 +122,21 @@ h1 {
     cursor: pointer;
     font-size: 0.9em;
     transition: all 0.3s ease;
-    white-space: nowrap;
+    white-space: nowrap; /* 防止文字換行 */
 }
 
 .copy-btn:hover {
-    background-color: #007acc;
-    transform: scale(1.05);
+    background-color: #007acc; /* 懸停時按鈕顏色變深 */
+    transform: scale(1.05); /* 懸停時輕微放大 */
 }
 
 .copy-btn.copied {
-    background-color: #28a745; /* Green for success */
+    background-color: #28a745; /* 複製成功後變為綠色 */
 }
 
 .extra-info {
     margin-top: 10px;
-    color: #bbbbbb; /* Lighter gray */
+    color: #bbbbbb; /* 較淺的灰色 */
     font-size: 0.9em;
     display: flex;
     align-items: center;
@@ -144,21 +144,21 @@ h1 {
 }
 
 .password {
-    background-color: rgba(255, 223, 186, 0.2); /* Light orange, semi-transparent */
+    background-color: rgba(255, 223, 186, 0.2); /* 淺橙色，半透明 */
     padding: 5px 10px;
     border-radius: 4px;
     display: inline-block;
     font-family: monospace;
-    color: #ffd700; /* Gold/Yellow for password */
+    color: #ffd700; /* 金色/黃色密碼文字 */
     cursor: pointer;
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 215, 0, 0.5);
+    border: 1px solid rgba(255, 215, 0, 0.5); /* 金色邊框 */
 }
 
 .password:hover {
-    background-color: rgba(255, 223, 186, 0.3);
-    transform: scale(1.05);
-    color: #fff;
+    background-color: rgba(255, 223, 186, 0.3); /* 懸停時背景更亮 */
+    transform: scale(1.05); /* 懸停時輕微放大 */
+    color: #fff; /* 懸停時文字變白 */
 }
 
 .toast {
@@ -166,16 +166,16 @@ h1 {
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background-color: rgba(34, 34, 34, 0.9); /* Darker, slightly transparent toast */
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    background-color: rgba(34, 34, 34, 0.9); /* 較深、略帶透明的提示框背景 */
+    backdrop-filter: blur(5px); /* 提示框毛玻璃效果 */
+    -webkit-backdrop-filter: blur(5px); /* Safari 兼容 */
     color: white;
     padding: 15px 25px;
     border-radius: 8px;
     opacity: 0;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 1000;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* 平滑的過渡動畫 */
+    z-index: 1000; /* 確保在最上層 */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* 提示框陰影 */
 }
 
 .toast.show {
@@ -184,23 +184,23 @@ h1 {
 }
 
 .download-all {
-    background-color: #28a745; /* Green for main action */
+    background-color: #28a745; /* 主要操作按鈕為綠色 */
     color: white;
     border: none;
     padding: 12px 30px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1.1em;
-    margin: 40px auto 10px; /* Adjusted margin */
+    margin: 40px auto 10px; /* 調整外邊距 */
     display: block;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.4);
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.4); /* 按鈕陰影 */
 }
 
 .download-all:hover {
-    background-color: #218838;
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.5);
+    background-color: #218838; /* 懸停時顏色變深 */
+    transform: scale(1.05); /* 懸停時輕微放大 */
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.5); /* 懸停時陰影增強 */
 }
 
 @keyframes fadeIn {
@@ -211,7 +211,7 @@ h1 {
 .ripple {
     position: absolute;
     border-radius: 50%;
-    background-color: rgba(0, 174, 255, 0.3); /* Brighter ripple */
+    background-color: rgba(0, 174, 255, 0.3); /* 更亮的漣漪顏色 */
     transform: scale(0);
     animation: rippleEffect 0.6s ease-out;
 }
@@ -223,34 +223,35 @@ h1 {
     }
 }
 
+/* 響應式設計：針對小螢幕設備 */
 @media (max-width: 600px) {
     body {
-        padding: 10px;
+        padding: 10px; /* 縮小頁面邊距 */
     }
     .container {
-        padding: 20px;
-        margin: 10px;
+        padding: 20px; /* 縮小容器內邊距 */
+        margin: 20px 10px; /* 調整容器外邊距 */
     }
     
     h1 {
-        font-size: 1.8em;
+        font-size: 1.8em; /* 縮小標題字號 */
     }
     
     .download-section {
-        padding: 15px;
+        padding: 15px; /* 縮小下載區塊內邊距 */
     }
     
     .link-wrapper {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: column; /* 連結和小按鈕垂直排列 */
+        align-items: stretch; /* 元素拉伸以填滿寬度 */
     }
     
     .copy-btn {
-        width: 100%;
-        margin-top: 10px;
+        width: 100%; /* 複製按鈕佔滿整行 */
+        margin-top: 10px; /* 按鈕上方增加間距 */
     }
      .download-all {
-        font-size: 1em;
-        padding: 10px 20px;
+        font-size: 1em; /* 縮小“複製所有連結”按鈕字號 */
+        padding: 10px 20px; /* 縮小按鈕內邊距 */
     }
 }
