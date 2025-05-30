@@ -1,6 +1,6 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Microsoft JhengHei', 'Segoe UI', Roboto, sans-serif;
-    background-image: url('https://r2.flowith.net/files/1e9e9aa2-0f48-4d90-823d-0fdeb3f53a85/1748589300022-bg@2000x1058.jpg');
+    background-image: url('http://jpg.novex.dpdns.org/bg.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -20,22 +20,32 @@ h1, #subtitle, .download-section, .download-all {
 
 h1 {
     text-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
+    transition: text-shadow 0.3s ease-out;
+}
+
+h1:hover {
+    text-shadow: 0 0 12px rgba(52, 152, 219, 0.8), 0 0 20px rgba(96, 165, 250, 0.4);
 }
 
 .download-section {
     background: rgba(31, 41, 55, 0.6);
     border-left: 4px solid #38bdf8;
-    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease-out;
     position: relative;
     overflow: hidden;
     cursor: pointer;
     margin-bottom: 1.5rem;
+    backdrop-filter: blur(4px) saturate(120%);
+    -webkit-backdrop-filter: blur(4px) saturate(120%);
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease-out, border-left-color 0.3s ease-out, backdrop-filter 0.3s ease-out;
 }
 
 .download-section:hover {
     transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.25);
-    background: rgba(55, 65, 81, 0.7);
+    box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+    background: rgba(55, 65, 81, 0.75);
+    border-left-color: #0ea5e9;
+    backdrop-filter: blur(8px) saturate(160%);
+    -webkit-backdrop-filter: blur(8px) saturate(160%);
 }
 
 .download-section h2, .download-section .link-wrapper {
@@ -69,11 +79,7 @@ h1 {
 }
 
 .copy-btn, .password, .download-all {
-    transition: transform 0.2s ease-out, filter 0.2s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
-}
-
-.copy-btn:hover, .password:hover, .download-all:hover {
-    transform: scale(1.05);
+    transition: transform 0.2s ease-out, filter 0.2s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease-in-out, background 0.3s ease-in-out, border-color 0.3s ease-in-out;
 }
 
 .copy-btn:active, .password:active, .download-all:active {
@@ -88,7 +94,8 @@ h1 {
 
 .copy-btn:hover {
     background-color: #1d4ed8; 
-    box-shadow: 0 0 12px rgba(37, 99, 235, 0.6);
+    box-shadow: 0 0 16px rgba(37, 99, 235, 0.7);
+    transform: scale(1.08);
 }
 
 .copy-btn.copied {
@@ -105,6 +112,7 @@ h1 {
     background-color: rgba(250, 204, 21, 0.2);
     border-color: #facc15;
     box-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
+    transform: scale(1.05);
 }
 
 #toast {
@@ -119,7 +127,8 @@ h1 {
 
 .download-all:hover {
     background: linear-gradient(135deg, #6d28d9, #c21b68); 
-    box-shadow: 0 0 15px rgba(219, 39, 119, 0.6);
+    box-shadow: 0 0 20px rgba(219, 39, 119, 0.75);
+    transform: scale(1.08);
 }
 
 @keyframes fadeInUp {
