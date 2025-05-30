@@ -1,17 +1,56 @@
+// 頁面加載完成後隱藏加載器
+window.addEventListener('load', function() {
+    setTimeout(() => {
+        document.getElementById('loader').classList.add('hide');
+    }, 500);
+});
+
+// 創建粒子效果
+function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    const particleCount = 50;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // 隨機大小
+        const size = Math.random() * 4 + 2;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        
+        // 隨機位置
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        
+        // 隨機動畫延遲和持續時間
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 20 + 15) + 's';
+        
+        particlesContainer.appendChild(particle);
+    }
+}
+
+// 初始化粒子效果
+createParticles();
+
 // 複製到剪貼板
 function copyToClipboard(event, text) {
     event.stopPropagation();
     navigator.clipboard.writeText(text).then(() => {
         const btn = event.target;
-        const originalText = btn.textContent; // 保存原始按鈕文字
+        const originalText = btn.textContent;
         btn.textContent = '已複製！';
         btn.classList.add('copied');
         showToast('連結已複製到剪貼板！');
         
         setTimeout(() => {
-            btn.textContent = '複製連結'; // 或者 originalText 如果每個按鈕文字不同
+            btn.textContent = originalText;
             btn.classList.remove('copied');
         }, 2000);
+    }).catch(err => {
+        console.error('複製失敗:', err);
+        showToast('複製失敗，請手動複製');
     });
 }
 
@@ -20,18 +59,27 @@ function copyPassword(event, password) {
     event.stopPropagation();
     navigator.clipboard.writeText(password).then(() => {
         showToast('提取碼已複製！');
-        const el = event.target;
-        const originalText = el.textContent;
-        el.textContent = '已複製!';
+        
+        // 添加視覺反饋
+        const element = event.target;
+        element.style.transform = 'scale(0.95)';
         setTimeout(() => {
-            el.textContent = originalText;
-        }, 1500);
+            element.style.transform = 'scale(1.05)';
+        }, 100);
+        setTimeout(() => {
+            element.style.transform = 'scale(1)';
+        }, 200);
+    }).catch(err => {
+        console.error('複製失敗:', err);
+        showToast('複製失敗，請手動複製');
     });
 }
 
 // 複製所有連結
 function copyAllLinks() {
-    const allLinks = `自架構高速下載：
+    const allLinks = `Aiseesoft iPhone Unlocker 無限裝置版 下載連結
+
+自架構高速下載：
 https://mdm.2o25shop.dpdns.org/download
 
 Google雲端：
@@ -49,33 +97,36 @@ https://1drv.ms/u/c/9e8cd632594795fc/EYAW-S7-ssxOpApxf1id_HkBroLVThJ5x3dypXw-24U
     
     navigator.clipboard.writeText(allLinks).then(() => {
         showToast('所有連結已複製到剪貼板！');
+        
+        // 添加按鈕動畫效果
+        const btn = event.target;
+        btn.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            btn.style.transform = 'scale(1)';
+        }, 200);
+    }).catch(err => {
+        console.error('複製失敗:', err);
+        showToast('複製失敗，請手動複製');
     });
 }
 
 // 顯示提示訊息
-let toastTimeout;
 function showToast(message) {
     const toast = document.getElementById('toast');
     toast.textContent = message;
     toast.classList.add('show');
     
-    clearTimeout(toastTimeout); // 如果前一個提示還在，清除它
-    toastTimeout = setTimeout(() => {
+    setTimeout(() => {
         toast.classList.remove('show');
     }, 3000);
 }
 
 // 創建波紋效果
 function createRipple(event, element) {
-    // 如果點擊的是按鈕、連結或密碼區域內部，則不創建波紋
-    if (event.target.tagName === 'A' || event.target.tagName === 'BUTTON' || event.target.classList.contains('password')) {
-        return;
-    }
-
     const ripple = document.createElement('span');
     ripple.classList.add('ripple');
     
-    const rect = element.getBoundingClientRect(); // 使用 element (傳入的 this)
+    const rect = element.getBoundingClientRect();
     const size = Math.max(rect.width, rect.height);
     const x = event.clientX - rect.left - size / 2;
     const y = event.clientY - rect.top - size / 2;
@@ -84,105 +135,77 @@ function createRipple(event, element) {
     ripple.style.left = x + 'px';
     ripple.style.top = y + 'px';
     
-    // 確保波紋附加到被點擊的 .download-section，而不是其子元素
-    // event.currentTarget 指向綁定事件的元素 (即帶有 onclick 的 .download-section)
-    const currentTarget = event.currentTarget; 
-    currentTarget.appendChild(ripple);
+    element.appendChild(ripple);
     
     setTimeout(() => {
         ripple.remove();
-    }, 600);
+    }, 800);
 }
 
-// DOMContentLoaded 事件確保在 HTML 完全加載和解析後執行腳本
-document.addEventListener('DOMContentLoaded', () => {
-    // 為下載區塊設置交錯動畫延遲
-    const sections = document.querySelectorAll('.download-section');
-    sections.forEach((section, index) => {
-        // 0.3s 是 h1 的 fadeIn 動畫時間，之後開始交錯動畫
-        section.style.animationDelay = `${index * 0.12 + 0.3}s`; 
-    });
-
-    // 粒子動畫
-    const canvas = document.getElementById('particle-canvas');
-    const ctx = canvas.getContext('2d');
-    let particlesArray;
-
-    // 設置畫布尺寸
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // 粒子對象
-    class Particle {
-        constructor(x, y, directionX, directionY, size, color) {
-            this.x = x;
-            this.y = y;
-            this.directionX = directionX;
-            this.directionY = directionY;
-            this.size = size;
-            this.color = color;
-        }
-
-        // 方法：繪製單個粒子
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-            ctx.fillStyle = this.color;
-            ctx.fill();
-        }
-
-        // 方法：更新粒子位置
-        update() {
-            // 檢查粒子是否碰到畫布邊緣
-            if (this.x > canvas.width || this.x < 0) {
-                this.directionX = -this.directionX;
-            }
-            if (this.y > canvas.height || this.y < 0) {
-                this.directionY = -this.directionY;
-            }
-            // 移動粒子
-            this.x += this.directionX;
-            this.y += this.directionY;
-            // 繪製粒子
-            this.draw();
-        }
+// 視差滾動效果
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const background = document.querySelector('.background-wrapper');
+    const speed = 0.5;
+    
+    if (background) {
+        background.style.transform = `translateY(${scrolled * speed}px) scale(1.1)`;
     }
+});
 
-    // 初始化粒子數組
-    function initParticles() {
-        particlesArray = [];
-        // 根據畫布面積計算粒子數量，可以調整分母來增減密度
-        let numberOfParticles = (canvas.height * canvas.width) / 9000; 
-        if (numberOfParticles > 150) numberOfParticles = 150; // 限制最大粒子數
-        for (let i = 0; i < numberOfParticles; i++) {
-            let size = (Math.random() * 2.5) + 0.5; // 粒子大小 0.5 到 3 之間
-            let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-            let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-            let directionX = (Math.random() * .4) - .2; // X軸移動速度 (-0.2 到 0.2)
-            let directionY = (Math.random() * .4) - .2; // Y軸移動速度 (-0.2 到 0.2)
-            let color = 'rgba(255, 255, 255, 0.6)'; // 粒子顏色 (帶透明度的白色)
-
-            particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
-        }
-    }
-
-    // 動畫循環
-    function animateParticles() {
-        requestAnimationFrame(animateParticles);
-        ctx.clearRect(0, 0, innerWidth, innerHeight); // 清除畫布
-
-        for (let i = 0; i < particlesArray.length; i++) {
-            particlesArray[i].update();
-        }
-    }
-
-    initParticles();
-    animateParticles();
-
-    // 響應窗口大小變化
-    window.addEventListener('resize', () => {
-        canvas.width = innerWidth;
-        canvas.height = innerHeight;
-        initParticles(); // 重新初始化粒子以適應新尺寸
+// 滑鼠移動視差效果
+document.addEventListener('mousemove', (e) => {
+    const mouseX = e.clientX / window.innerWidth - 0.5;
+    const mouseY = e.clientY / window.innerHeight - 0.5;
+    
+    const particles = document.querySelectorAll('.particle');
+    particles.forEach((particle, index) => {
+        const speed = (index % 5 + 1) * 0.5;
+        const x = mouseX * speed * 10;
+        const y = mouseY * speed * 10;
+        particle.style.transform = `translate(${x}px, ${y}px)`;
     });
 });
+
+// 性能優化：使用 requestAnimationFrame 進行動畫
+let ticking = false;
+function updateParallax(mouseX, mouseY) {
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle, index) => {
+                const speed = (index % 5 + 1) * 0.5;
+                const x = mouseX * speed * 10;
+                const y = mouseY * speed * 10;
+                particle.style.transform = `translate(${x}px, ${y}px)`;
+            });
+            ticking = false;
+        });
+        ticking = true;
+    }
+}
+
+// 優化後的滑鼠移動事件
+document.addEventListener('mousemove', (e) => {
+    const mouseX = e.clientX / window.innerWidth - 0.5;
+    const mouseY = e.clientY / window.innerHeight - 0.5;
+    updateParallax(mouseX, mouseY);
+});
+
+// 檢測是否支援 backdrop-filter
+if (!CSS.supports('backdrop-filter', 'blur(10px)')) {
+    document.body.classList.add('no-backdrop-filter');
+    // 可以在 CSS 中為 .no-backdrop-filter 添加替代樣式
+}
+
+// 預加載背景圖片
+const img = new Image();
+img.src = 'bg.jpg';
+img.onload = function() {
+    console.log('背景圖片加載完成');
+};
+img.onerror = function() {
+    console.error('背景圖片加載失敗');
+    // 如果圖片加載失敗，可以設置替代背景
+    document.querySelector('.background-wrapper').style.background = 'linear-gradient(135deg, #1e3a8a, #312e81)';
+};
