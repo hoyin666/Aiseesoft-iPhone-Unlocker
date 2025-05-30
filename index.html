@@ -221,6 +221,18 @@
         <p class="subtitle">點擊複製連結，或直接點擊訪問</p>
         
         <div class="download-section" onclick="createRipple(event, this)">
+            <h2>自架構高速下載</h2>
+            <div class="link-wrapper">
+                <a href="https://mdm.2o25shop.dpdns.org/download" target="_blank">
+                    https://mdm.2o25shop.dpdns.org/download
+                </a>
+                <button class="copy-btn" onclick="copyToClipboard(event, 'https://mdm.2o25shop.dpdns.org/download')">
+                    複製連結
+                </button>
+            </div>
+        </div>
+        
+        <div class="download-section" onclick="createRipple(event, this)">
             <h2>Google雲端</h2>
             <div class="link-wrapper">
                 <a href="https://drive.google.com/file/d/19lB6dEq4yyESN6R6GcIS0CqkrDHQXeX1/view?usp=drivesdk" target="_blank">
@@ -306,7 +318,10 @@
         
         // 複製所有連結
         function copyAllLinks() {
-            const allLinks = `Google雲端：
+            const allLinks = `自架構高速下載：
+https://mdm.2o25shop.dpdns.org/download
+
+Google雲端：
 https://drive.google.com/file/d/19lB6dEq4yyESN6R6GcIS0CqkrDHQXeX1/view?usp=drivesdk
 
 Proton 雲端：
