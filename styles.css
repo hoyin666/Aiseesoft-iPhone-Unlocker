@@ -1,383 +1,116 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Microsoft JhengHei', 'Segoe UI', Roboto, sans-serif;
-    background-color: #0a0a0a;
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-}
-
-/* === 背景圖片區 === */
-.background-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: url('bg.jpg') no-repeat center center;
+    background-image: url('https://r2.flowith.net/files/1e9e9aa2-0f48-4d90-823d-0fdeb3f53a85/1748589300022-bg@2000x1058.jpg');
     background-size: cover;
-    filter: brightness(0.7) blur(1px); /* 依需求可調整 */
-    transform: scale(1.1);
-    animation: backgroundZoom 20s ease-in-out infinite alternate;
+    background-position: center;
+    background-attachment: fixed;
 }
 
-@keyframes backgroundZoom {
-    0% { transform: scale(1.1); }
-    100% { transform: scale(1.2); }
-}
-
-/* === 遮罩漸層層 === */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(15,23,42,0.90) 0%, rgba(30,41,59,0.78) 50%, rgba(15,23,42,0.90) 100%);
-    z-index: -1;
-}
-
-/* === 粒子背景特效 === */
-.particles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 0;
-}
-
-.particle {
-    position: absolute;
-    background: radial-gradient(circle, rgba(147,197,253,0.8) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    animation: float 15s infinite;
-}
-@keyframes float {
-    0%, 100% {
-        transform: translateY(100vh) translateX(0) scale(0);
-        opacity: 0;
-    }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateY(-100vh) translateX(100px) scale(1); opacity: 0; }
-}
-
-/* === 容器玻璃特效 && 陰影 === */
 .container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 40px;
-    position: relative;
-    z-index: 1;
-    background: rgba(255,255,255,0.09);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.13);
-    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.38);
-    animation: containerFadeIn 1s ease-out;
-}
-@keyframes containerFadeIn {
-    from { opacity: 0; transform: translateY(30px);}
-    to   { opacity: 1; transform: translateY(0);}
+    background: rgba(17, 24, 39, 0.65);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* === 標題 + 副標 === */
 h1 {
-    color: #f1f5f9;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.5em;
-    font-weight: 700;
-    text-shadow: 0 0 30px rgba(147,197,253,0.4);
-    animation: titleGlow 2s ease-in-out infinite alternate;
-}
-@keyframes titleGlow {
-    from { text-shadow: 0 0 20px rgba(147,197,253,0.4); }
-    to   { text-shadow: 0 0 45px rgba(147,197,253,0.75), 0 0 15px rgba(147,197,253,0.12);}
-}
-.subtitle {
-    text-align: center;
-    color: #94a3b8;
-    margin-bottom: 40px;
-    font-size: 1em;
-    letter-spacing: 0.5px;
-    animation: fadeInUp 1s ease-out 0.3s both;
-}
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px);}
-    to { opacity: 1; transform: translateY(0);}
+    animation: fadeIn 0.5s ease-in;
+    text-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
 }
 
-/* === 下載區 Glass & 動畫 === */
 .download-section {
-    margin-bottom: 20px;
-    padding: 25px;
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(6px);
-    border-radius: 15px;
-    border: 1px solid rgba(255,255,255,0.10);
-    transition: all 0.36s cubic-bezier(.56,.39,.27,1.25);
+    background: rgba(31, 41, 55, 0.6);
+    border-left: 4px solid #38bdf8; /* Tailwind's sky-500 */
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    animation: sectionFadeIn 0.6s both;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: cardSlideUp 0.5s ease-out forwards;
 }
-.download-section:nth-child(odd) { animation-delay: 0.1s; }
-.download-section:nth-child(even) { animation-delay: 0.2s; }
-@keyframes sectionFadeIn {
-    from { opacity: 0; transform: translateX(-30px);}
-    to   { opacity: 1; transform: translateX(0);}
-}
-.download-section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(147,197,253,0.21), transparent);
-    transition: left 0.6s ease;
-}
-.download-section:hover::before {
-    left: 100%;
-}
+
 .download-section:hover {
-    transform: translateY(-5px) scale(1.015);
-    background: rgba(147,197,253,0.13);
-    border-color: rgba(147,197,253,0.35);
-    box-shadow: 0 10px 40px rgba(147,197,253,0.13);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.25);
+    background: rgba(55, 65, 81, 0.7);
 }
+
 .download-section h2 {
-    color: #93c5fd;
-    font-size: 1.4em;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    color: #60a5fa; /* Tailwind's blue-400 */
 }
-.download-section h2::before {
-    content: '▶';
-    font-size: 0.8em;
-    animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.7; }
-}
-.link-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-.download-section a {
-    color: #60a5fa;
+
+.download-link {
+    color: #93c5fd; /* Tailwind's blue-300 */
     text-decoration: none;
     word-break: break-all;
-    flex: 1;
-    transition: all 0.3s;
+    transition: color 0.3s ease;
 }
-.download-section a:hover {
-    color: #93c5fd;
-    text-shadow: 0 0 10px rgba(147,197,253,0.50);
+
+.download-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
 }
+
 .copy-btn {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 0.93em;
-    font-weight: 500;
-    transition: all 0.3s;
-    white-space: nowrap;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(59,130,246,0.22);
+    background-color: #2563eb; /* Tailwind's blue-600 */
 }
-.copy-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 0; height: 0;
-    background: rgba(255,255,255,0.23);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-.copy-btn:hover::before {
-    width: 300px;
-    height: 300px;
-}
+
 .copy-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(59,130,246,0.36);
+    background-color: #1d4ed8; /* Tailwind's blue-700 */
 }
+
 .copy-btn.copied {
-    background: linear-gradient(135deg,#10b981,#059669);
-    animation: successPulse 0.5s ease;
-}
-@keyframes successPulse {
-    0% { transform: scale(1);}
-    50%{ transform: scale(1.1);}
-    100%{ transform: scale(1);}
+    background-color: #16a34a; /* Tailwind's green-600 */
 }
 
-/* === 協助資訊 + 密碼欄 === */
-.extra-info {
-    margin-top: 15px;
-    color: #94a3b8;
-    font-size: 0.93em;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
 .password {
-    background: linear-gradient(135deg,rgba(251,191,36,0.20),rgba(245,158,11,0.18));
-    border: 1px solid rgba(251,191,36,0.28);
-    padding: 6px 12px;
-    border-radius: 8px;
-    display: inline-block;
-    font-family: monospace;
-    color: #fbbf24;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
+    background-color: rgba(55, 65, 81, 0.7); /* Tailwind's gray-700 with alpha */
+    color: #facc15; /* Tailwind's yellow-400 */
+    border: 1px solid rgba(250, 204, 21, 0.4);
 }
+
 .password:hover {
-    background: linear-gradient(135deg,rgba(251,191,36,0.34),rgba(245,158,11,0.32));
-    transform: scale(1.07);
-    box-shadow: 0 0 20px rgba(251,191,36,0.13);
+    background-color: rgba(250, 204, 21, 0.2);
+    border-color: #facc15;
 }
 
-/* === Toast 通知視覺 === */
-.toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: rgba(15,23,42,0.95);
-    backdrop-filter: blur(10px);
-    color: #fff;
-    padding: 18px 30px;
-    border-radius: 12px;
-    border: 1px solid rgba(147,197,253,0.31);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.48);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(.68,-0.55,.265,1.55);
-    z-index: 1000;
-}
-.toast.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
+#toast {
+    background-color: rgba(17, 24, 39, 0.85); /* Tailwind's gray-900 with alpha */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
-/* === 全部複製按鈕 === */
 .download-all {
-    background: linear-gradient(135deg,#10b981,#059669);
-    color: white;
-    border: none;
-    padding: 15px 40px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: 600;
-    margin: 40px auto 0;
-    display: block;
-    transition: all 0.3s;
-    box-shadow: 0 4px 20px rgba(16,185,129,0.28);
-    position: relative;
-    overflow: hidden;
-}
-.download-all::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle,rgba(255,255,255,0.20) 0%,transparent 70%);
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.6s;
-}
-.download-all:hover::after {
-    transform: translate(-50%, -50%) scale(1);
-}
-.download-all:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(16,185,129,0.41);
+    background: linear-gradient(135deg, #7c3aed, #db2777); /* Tailwind's violet-600 to pink-600 */
 }
 
-/* === 波紋點擊效果 === */
+.download-all:hover {
+    background: linear-gradient(135deg, #6d28d9, #c21b68); /* Darker shades */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .ripple {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(circle,rgba(147,197,253,0.6) 0%,transparent 70%);
+    background-color: rgba(52, 152, 219, 0.3);
     transform: scale(0);
-    animation: rippleEffect 0.8s ease-out;
+    animation: rippleEffect 0.6s ease-out;
+    pointer-events: none;
 }
+
 @keyframes rippleEffect {
     to {
         transform: scale(4);
         opacity: 0;
     }
-}
-
-
-/* === 響應式手機版 === */
-@media (max-width: 600px) {
-    .container {
-        margin: 20px;
-        padding: 20px;
-    }
-    h1 {
-        font-size: 1.8em;
-    }
-    .download-section {
-        padding: 20px;
-    }
-    .link-wrapper {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .copy-btn {
-        width: 100%;
-        margin-top: 10px;
-    }
-}
-
-/* === 載入動畫 === */
-.loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #0a0a0a;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.5s;
-}
-.loader.hide {
-    opacity: 0;
-    pointer-events: none;
-}
-.loader-circle {
-    width: 50px;
-    height: 50px;
-    border: 3px solid rgba(147,197,253,0.2);
-    border-top-color: #93c5fd;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-@keyframes spin {
-    to { transform: rotate(360deg);}
 }
