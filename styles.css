@@ -1,3 +1,4 @@
+/* 重置樣式 */
 * {
     margin: 0;
     padding: 0;
@@ -6,137 +7,289 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Microsoft JhengHei', 'Segoe UI', Roboto, sans-serif;
-    /* 背景由 .background-layer 處理 */
-    padding: 20px;
-    line-height: 1.6;
-    color: #f0f0f0; /* 預設淺色文字 */
-    overflow-x: hidden; /* 防止粒子動畫產生水平滾動條 */
+    background-color: #0a0a0a;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
 }
 
-.background-layer {
+/* 背景圖片設置 */
+.background-wrapper {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; 
-    background: url('bg.jpg') no-repeat center center fixed; /* 使用您的背景圖片 */
-    background-size: cover; /* 確保背景圖片填滿並覆蓋整個區域 */
+    z-index: -1;
+    background: url('bg.jpg') no-repeat center center;
+    background-size: cover;
+    filter: brightness(0.3);
+    transform: scale(1.1);
+    animation: backgroundZoom 20s ease-in-out infinite alternate;
 }
 
-#particle-canvas {
-    display: block;
+@keyframes backgroundZoom {
+    0% { transform: scale(1.1); }
+    100% { transform: scale(1.2); }
+}
+
+/* 覆蓋層漸變 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(15, 23, 42, 0.9) 0%, 
+        rgba(30, 41, 59, 0.8) 50%, 
+        rgba(15, 23, 42, 0.9) 100%);
+    z-index: -1;
 }
 
+/* 粒子效果容器 */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.particle {
+    position: absolute;
+    background: radial-gradient(circle, rgba(147, 197, 253, 0.8) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float 15s infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(100px) scale(1);
+        opacity: 0;
+    }
+}
+
+/* 主容器玻璃擬態效果 */
 .container {
     max-width: 800px;
-    margin: 40px auto; /* 增加上下邊距，讓內容在垂直方向上更居中一些 */
-    background-color: rgba(0, 0, 0, 0.65); /* 深色半透明背景 */
-    backdrop-filter: blur(8px); /* 毛玻璃效果 */
-    -webkit-backdrop-filter: blur(8px); /* Safari 瀏覽器兼容 */
+    margin: 50px auto;
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37); /* 更明顯的陰影效果 */
-    position: relative; /* 用於 z-index 堆疊上下文 */
-    z-index: 1; /* 確保容器在背景層之上 */
-}
-
-h1 {
-    color: #ffffff; /* 白色文字 */
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.2em;
-    animation: fadeIn 0.8s ease-in-out;
-    text-shadow: 0 0 10px rgba(0, 174, 255, 0.5); /* 藍色光暈效果 */
-}
-
-.subtitle {
-    text-align: center;
-    color: #cccccc; /* 淺灰色文字 */
-    margin-bottom: 30px;
-    font-size: 0.95em;
-}
-
-.download-section {
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.08); /* 細微的淺色半透明背景 */
-    border-radius: 8px;
-    border-left: 4px solid #00aeff; /* 強調藍色 */
-    transition: all 0.3s ease;
-    cursor: pointer;
     position: relative;
-    overflow: hidden;
-    opacity: 0; /* 用於 fadeInUp 動畫 */
-    transform: translateY(20px); /* 用於 fadeInUp 動畫 */
-    animation: fadeInUp 0.5s ease-out forwards; /* 向上滑入動畫 */
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: containerFadeIn 1s ease-out;
 }
 
-@keyframes fadeInUp {
+@keyframes containerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
+/* 標題樣式 */
+h1 {
+    color: #f1f5f9;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    font-weight: 700;
+    text-shadow: 0 0 30px rgba(147, 197, 253, 0.5);
+    animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    from { text-shadow: 0 0 20px rgba(147, 197, 253, 0.5); }
+    to { text-shadow: 0 0 40px rgba(147, 197, 253, 0.8), 0 0 60px rgba(147, 197, 253, 0.4); }
+}
+
+.subtitle {
+    text-align: center;
+    color: #94a3b8;
+    margin-bottom: 40px;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 下載區塊玻璃擬態 */
+.download-section {
+    margin-bottom: 20px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    animation: sectionFadeIn 0.6s ease-out both;
+}
+
+.download-section:nth-child(odd) { animation-delay: 0.1s; }
+.download-section:nth-child(even) { animation-delay: 0.2s; }
+
+@keyframes sectionFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.download-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.download-section:hover::before {
+    left: 100%;
+}
+
 .download-section:hover {
-    transform: translateY(-3px) scale(1.01); /* 懸停時輕微上移並放大 */
-    box-shadow: 0 6px 20px rgba(0, 174, 255, 0.3); /* 懸停時藍色陰影 */
-    background-color: rgba(255, 255, 255, 0.12); /* 懸停時背景更亮一點 */
+    transform: translateY(-5px) scale(1.02);
+    background: rgba(147, 197, 253, 0.1);
+    border-color: rgba(147, 197, 253, 0.3);
+    box-shadow: 0 10px 40px rgba(147, 197, 253, 0.2);
 }
 
 .download-section h2 {
-    color: #00aeff; /* 強調藍色 */
-    font-size: 1.3em;
-    margin-bottom: 10px;
+    color: #93c5fd;
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.download-section h2::before {
+    content: '▶';
+    font-size: 0.8em;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
 }
 
 .link-wrapper {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 }
 
 .download-section a {
-    color: #87cefa; /* 淺天空藍連結顏色 */
+    color: #60a5fa;
     text-decoration: none;
     word-break: break-all;
     flex: 1;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .download-section a:hover {
-    text-decoration: underline;
-    color: #ffffff; /* 懸停時變為白色 */
+    color: #93c5fd;
+    text-shadow: 0 0 10px rgba(147, 197, 253, 0.5);
 }
 
+/* 按鈕樣式增強 */
 .copy-btn {
-    background-color: #00aeff; /* 強調藍色按鈕 */
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: white;
     border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
+    padding: 10px 20px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 0.9em;
+    font-weight: 500;
     transition: all 0.3s ease;
-    white-space: nowrap; /* 防止文字換行 */
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.copy-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.copy-btn:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 .copy-btn:hover {
-    background-color: #007acc; /* 懸停時按鈕顏色變深 */
-    transform: scale(1.05); /* 懸停時輕微放大 */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
 }
 
 .copy-btn.copied {
-    background-color: #28a745; /* 複製成功後變為綠色 */
+    background: linear-gradient(135deg, #10b981, #059669);
+    animation: successPulse 0.5s ease;
+}
+
+@keyframes successPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 
 .extra-info {
-    margin-top: 10px;
-    color: #bbbbbb; /* 較淺的灰色 */
+    margin-top: 15px;
+    color: #94a3b8;
     font-size: 0.9em;
     display: flex;
     align-items: center;
@@ -144,38 +297,40 @@ h1 {
 }
 
 .password {
-    background-color: rgba(255, 223, 186, 0.2); /* 淺橙色，半透明 */
-    padding: 5px 10px;
-    border-radius: 4px;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.2));
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    padding: 6px 12px;
+    border-radius: 8px;
     display: inline-block;
     font-family: monospace;
-    color: #ffd700; /* 金色/黃色密碼文字 */
+    color: #fbbf24;
     cursor: pointer;
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 215, 0, 0.5); /* 金色邊框 */
+    position: relative;
 }
 
 .password:hover {
-    background-color: rgba(255, 223, 186, 0.3); /* 懸停時背景更亮 */
-    transform: scale(1.05); /* 懸停時輕微放大 */
-    color: #fff; /* 懸停時文字變白 */
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.3));
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
 }
 
+/* Toast 通知增強 */
 .toast {
     position: fixed;
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background-color: rgba(34, 34, 34, 0.9); /* 較深、略帶透明的提示框背景 */
-    backdrop-filter: blur(5px); /* 提示框毛玻璃效果 */
-    -webkit-backdrop-filter: blur(5px); /* Safari 兼容 */
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
     color: white;
-    padding: 15px 25px;
-    border-radius: 8px;
+    padding: 18px 30px;
+    border-radius: 12px;
+    border: 1px solid rgba(147, 197, 253, 0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     opacity: 0;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* 平滑的過渡動畫 */
-    z-index: 1000; /* 確保在最上層 */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* 提示框陰影 */
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1000;
 }
 
 .toast.show {
@@ -183,37 +338,52 @@ h1 {
     opacity: 1;
 }
 
+/* 全部複製按鈕 */
 .download-all {
-    background-color: #28a745; /* 主要操作按鈕為綠色 */
+    background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     border: none;
-    padding: 12px 30px;
-    border-radius: 5px;
+    padding: 15px 40px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 1.1em;
-    margin: 40px auto 10px; /* 調整外邊距 */
+    font-weight: 600;
+    margin: 40px auto 0;
     display: block;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.4); /* 按鈕陰影 */
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.download-all::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.6s ease;
+}
+
+.download-all:hover::after {
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .download-all:hover {
-    background-color: #218838; /* 懸停時顏色變深 */
-    transform: scale(1.05); /* 懸停時輕微放大 */
-    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.5); /* 懸停時陰影增強 */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.6);
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
+/* 波紋效果增強 */
 .ripple {
     position: absolute;
     border-radius: 50%;
-    background-color: rgba(0, 174, 255, 0.3); /* 更亮的漣漪顏色 */
+    background: radial-gradient(circle, rgba(147, 197, 253, 0.6) 0%, transparent 70%);
     transform: scale(0);
-    animation: rippleEffect 0.6s ease-out;
+    animation: rippleEffect 0.8s ease-out;
 }
 
 @keyframes rippleEffect {
@@ -223,35 +393,61 @@ h1 {
     }
 }
 
-/* 響應式設計：針對小螢幕設備 */
+/* 響應式設計 */
 @media (max-width: 600px) {
-    body {
-        padding: 10px; /* 縮小頁面邊距 */
-    }
     .container {
-        padding: 20px; /* 縮小容器內邊距 */
-        margin: 20px 10px; /* 調整容器外邊距 */
+        margin: 20px;
+        padding: 20px;
     }
     
     h1 {
-        font-size: 1.8em; /* 縮小標題字號 */
+        font-size: 1.8em;
     }
     
     .download-section {
-        padding: 15px; /* 縮小下載區塊內邊距 */
+        padding: 20px;
     }
     
     .link-wrapper {
-        flex-direction: column; /* 連結和小按鈕垂直排列 */
-        align-items: stretch; /* 元素拉伸以填滿寬度 */
+        flex-direction: column;
+        align-items: stretch;
     }
     
     .copy-btn {
-        width: 100%; /* 複製按鈕佔滿整行 */
-        margin-top: 10px; /* 按鈕上方增加間距 */
+        width: 100%;
+        margin-top: 10px;
     }
-     .download-all {
-        font-size: 1em; /* 縮小“複製所有連結”按鈕字號 */
-        padding: 10px 20px; /* 縮小按鈕內邊距 */
-    }
+}
+
+/* 加載動畫 */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0a0a;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease;
+}
+
+.loader.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-circle {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(147, 197, 253, 0.2);
+    border-top-color: #93c5fd;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
