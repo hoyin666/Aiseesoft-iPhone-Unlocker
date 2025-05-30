@@ -11,7 +11,7 @@
   <style>
     /* 全站重置 */
     * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { width:100%; height:100%; overflow-x:hidden; font-family:-apple-system, BlinkMacSystemFont, 'Microsoft JhengHei','Segoe UI', Roboto, sans-serif; }
+    html, body { width:100%; height:100%; overflow-x:hidden; font-family:-apple-system, BlinkMacSystemFont,'Microsoft JhengHei','Segoe UI',Roboto,sans-serif; }
 
     /* 背景圖與深色遮罩 */
     body {
@@ -111,6 +111,7 @@
     }
     .copy-btn:hover { background:#0056b3; transform:scale(1.05); }
     .copy-btn.copied { background:#28a745!important; }
+
     .extra-info {
       margin-top:10px;
       font-size:.9em;
@@ -128,6 +129,20 @@
       transition: all .3s;
     }
     .password:hover { background: rgba(255,255,255,0.4); transform:scale(1.05); }
+
+    /* 波紋效果 */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(0, 123, 255, 0.3);
+      transform: scale(0);
+      animation: rippleEffect 0.6s ease-out;
+      pointer-events: none;
+      z-index: 2;
+    }
+    @keyframes rippleEffect {
+      to { transform: scale(4); opacity: 0; }
+    }
 
     /* 複製所有連結 */
     .download-all {
@@ -168,46 +183,6 @@
       opacity:1;
     }
 
-    /* 向下箭頭提示 */
-    .scroll-down {
-      position:absolute;
-      left:50%;
-      bottom:20px;
-      transform:translateX(-50%);
-      z-index:2;
-      width:30px;
-      height:50px;
-      cursor:pointer;
-    }
-    .scroll-down::before {
-      content:"";
-      position:absolute;
-      top:0;
-      left:50%;
-      width:4px;
-      height:30px;
-      background:rgba(255,255,255,0.7);
-      transform:translateX(-50%);
-      border-radius:2px;
-    }
-    .scroll-down::after {
-      content:"";
-      position:absolute;
-      top:25px;
-      left:50%;
-      width:12px;
-      height:12px;
-      border-left:4px solid rgba(255,255,255,0.7);
-      border-bottom:4px solid rgba(255,255,255,0.7);
-      transform:translateX(-50%) rotate(-45deg);
-      animation: arrowBounce 1.5s infinite;
-    }
-    @keyframes arrowBounce {
-      0%   { transform:translateX(-50%) rotate(-45deg) translateY(0); }
-      50%  { transform:translateX(-50%) rotate(-45deg) translateY(8px); }
-      100% { transform:translateX(-50%) rotate(-45deg) translateY(0); }
-    }
-
     /* 響應式 */
     @media (max-width:600px){
       .container { padding:30px 20px; }
@@ -228,7 +203,7 @@
 
     <!-- 自架構高速下載 -->
     <div class="download-section" onclick="createRipple(event,this)">
-      <h2>自架構高速下載</h2>
+      <h2>自架構高速下載(推薦)</h2>
       <div class="link-wrapper">
         <a href="https://mdm.2o25shop.dpdns.org/download" target="_blank">
           https://mdm.2o25shop.dpdns.org/download
@@ -288,11 +263,11 @@
     <div class="download-section" onclick="createRipple(event,this)">
       <h2>百度網盤</h2>
       <div class="link-wrapper">
-        <a href="https://pan.baidu.com/s/1qQfLLa1DOTnWCl47Ze4gBg?pwd=tool" target="_blank">
-          https://pan.baidu.com/s/1qQfLLa1DOTnWCl47Ze4gBg?pwd=tool
+        <a href="https://pan.baidu.com/s/1dxjhXdd_Be7SlvxpRKBGhg?pwd=tool" target="_blank">
+        https://pan.baidu.com/s/1dxjhXdd_Be7SlvxpRKBGhg?pwd=tool
         </a>
         <button class="copy-btn"
-          onclick="copyToClipboard(event,'https://pan.baidu.com/s/1qQfLLa1DOTnWCl47Ze4gBg?pwd=tool')">
+          onclick="copyToClipboard(event,'https://pan.baidu.com/s/1dxjhXdd_Be7SlvxpRKBGhg?pwd=tool')">
           複製連結
         </button>
       </div>
@@ -307,12 +282,7 @@
     <button class="download-all" onclick="copyAllLinks()">
       複製所有連結
     </button>
-
-    <!-- 向下箭頭提示 -->
-    <div class="scroll-down"
-         onclick="window.scrollBy({ top: window.innerHeight * 0.6, behavior: 'smooth' })">
-    </div>
-  </div>
+  </div> <!-- /.container -->
 
   <!-- Toast -->
   <div class="toast" id="toast"></div>
@@ -368,7 +338,7 @@
 
     // 一次複製所有連結
     function copyAllLinks() {
-      const allLinks = `自架構高速下載：
+      const allLinks = `自架構高速下載(推薦)：
 https://mdm.2o25shop.dpdns.org/download
 
 Google 雲端：
@@ -381,7 +351,7 @@ Onedrive 雲端：
 https://1drv.ms/u/c/9e8cd632594795fc/EYAW-S7-ssxOpApxf1id_HkBroLVThJ5x3dypXw-24U-XQ
 
 百度網盤：
-https://pan.baidu.com/s/1qQfLLa1DOTnWCl47Ze4gBg?pwd=tool
+https://pan.baidu.com/s/1dxjhXdd_Be7SlvxpRKBGhg?pwd=tool
 提取碼: tool`;
       navigator.clipboard.writeText(allLinks).then(()=>{
         showToast('所有連結已複製到剪貼板！');
