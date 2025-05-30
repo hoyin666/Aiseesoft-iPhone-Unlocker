@@ -13,21 +13,23 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+h1, #subtitle, .download-section, .download-all {
+    opacity: 0;
+    will-change: opacity, transform;
+}
+
 h1 {
-    animation: fadeIn 0.5s ease-in;
     text-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
 }
 
 .download-section {
     background: rgba(31, 41, 55, 0.6);
-    border-left: 4px solid #38bdf8; /* Tailwind's sky-500 */
-    transition: all 0.3s ease;
+    border-left: 4px solid #38bdf8;
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease-out;
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: cardSlideUp 0.5s ease-out forwards;
+    margin-bottom: 1.5rem;
 }
 
 .download-section:hover {
@@ -36,65 +38,91 @@ h1 {
     background: rgba(55, 65, 81, 0.7);
 }
 
+.download-section h2, .download-section .link-wrapper {
+    transition: transform 0.3s ease-out;
+}
+
+.download-section:hover h2 {
+    transform: translateX(5px);
+}
+
+.download-section:hover .link-wrapper {
+    transform: translateX(3px);
+}
+
 .download-section h2 {
-    color: #60a5fa; /* Tailwind's blue-400 */
+    color: #60a5fa; 
 }
 
 .download-link {
-    color: #93c5fd; /* Tailwind's blue-300 */
+    color: #93c5fd; 
     text-decoration: none;
     word-break: break-all;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease-out;
+    display: inline-block; 
 }
 
 .download-link:hover {
     color: #ffffff;
     text-decoration: underline;
+    transform: translateX(4px);
+}
+
+.copy-btn, .password, .download-all {
+    transition: transform 0.2s ease-out, filter 0.2s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.copy-btn:hover, .password:hover, .download-all:hover {
+    transform: scale(1.05);
+}
+
+.copy-btn:active, .password:active, .download-all:active {
+    transform: scale(0.97) translateY(1px);
+    filter: brightness(0.9);
+    transition-duration: 0.1s;
 }
 
 .copy-btn {
-    background-color: #2563eb; /* Tailwind's blue-600 */
+    background-color: #2563eb; 
 }
 
 .copy-btn:hover {
-    background-color: #1d4ed8; /* Tailwind's blue-700 */
+    background-color: #1d4ed8; 
+    box-shadow: 0 0 12px rgba(37, 99, 235, 0.6);
 }
 
 .copy-btn.copied {
-    background-color: #16a34a; /* Tailwind's green-600 */
+    background-color: #16a34a; 
 }
 
 .password {
-    background-color: rgba(55, 65, 81, 0.7); /* Tailwind's gray-700 with alpha */
-    color: #facc15; /* Tailwind's yellow-400 */
+    background-color: rgba(55, 65, 81, 0.7); 
+    color: #facc15; 
     border: 1px solid rgba(250, 204, 21, 0.4);
 }
 
 .password:hover {
     background-color: rgba(250, 204, 21, 0.2);
     border-color: #facc15;
+    box-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
 }
 
 #toast {
-    background-color: rgba(17, 24, 39, 0.85); /* Tailwind's gray-900 with alpha */
+    background-color: rgba(17, 24, 39, 0.85); 
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
 }
 
 .download-all {
-    background: linear-gradient(135deg, #7c3aed, #db2777); /* Tailwind's violet-600 to pink-600 */
+    background: linear-gradient(135deg, #7c3aed, #db2777); 
 }
 
 .download-all:hover {
-    background: linear-gradient(135deg, #6d28d9, #c21b68); /* Darker shades */
+    background: linear-gradient(135deg, #6d28d9, #c21b68); 
+    box-shadow: 0 0 15px rgba(219, 39, 119, 0.6);
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes cardSlideUp {
+@keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
