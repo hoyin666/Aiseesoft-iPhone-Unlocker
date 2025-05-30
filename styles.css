@@ -1,4 +1,3 @@
-/* 重置樣式 */
 * {
     margin: 0;
     padding: 0;
@@ -7,289 +6,137 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Microsoft JhengHei', 'Segoe UI', Roboto, sans-serif;
-    background-color: #0a0a0a;
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
+    /* Background is now handled by .background-layer */
+    padding: 20px;
+    line-height: 1.6;
+    color: #f0f0f0; /* Default light text color */
+    overflow-x: hidden; /* Prevent horizontal scrollbar from particles */
 }
 
-/* 背景圖片設置 */
-.background-wrapper {
+.background-layer {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
-    background: url('bg.jpg') no-repeat center center;
+    z-index: -1; 
+    background: url('bg.jpg') no-repeat center center fixed;
     background-size: cover;
-    filter: brightness(0.3);
-    transform: scale(1.1);
-    animation: backgroundZoom 20s ease-in-out infinite alternate;
 }
 
-@keyframes backgroundZoom {
-    0% { transform: scale(1.1); }
-    100% { transform: scale(1.2); }
-}
-
-/* 覆蓋層漸變 */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
+#particle-canvas {
+    display: block;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, 
-        rgba(15, 23, 42, 0.9) 0%, 
-        rgba(30, 41, 59, 0.8) 50%, 
-        rgba(15, 23, 42, 0.9) 100%);
-    z-index: -1;
 }
 
-/* 粒子效果容器 */
-.particles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 0;
-}
-
-.particle {
-    position: absolute;
-    background: radial-gradient(circle, rgba(147, 197, 253, 0.8) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    animation: float 15s infinite;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(100vh) translateX(0) scale(0);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-100vh) translateX(100px) scale(1);
-        opacity: 0;
-    }
-}
-
-/* 主容器玻璃擬態效果 */
 .container {
     max-width: 800px;
-    margin: 50px auto;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.65); /* Dark semi-transparent background */
+    backdrop-filter: blur(8px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(8px); /* Safari */
     padding: 40px;
-    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    position: relative; /* For z-index stacking */
     z-index: 1;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    animation: containerFadeIn 1s ease-out;
 }
 
-@keyframes containerFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* 標題樣式 */
 h1 {
-    color: #f1f5f9;
+    color: #ffffff; /* Light text */
     text-align: center;
     margin-bottom: 20px;
-    font-size: 2.5em;
-    font-weight: 700;
-    text-shadow: 0 0 30px rgba(147, 197, 253, 0.5);
-    animation: titleGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes titleGlow {
-    from { text-shadow: 0 0 20px rgba(147, 197, 253, 0.5); }
-    to { text-shadow: 0 0 40px rgba(147, 197, 253, 0.8), 0 0 60px rgba(147, 197, 253, 0.4); }
+    font-size: 2.2em;
+    animation: fadeIn 0.8s ease-in-out;
+    text-shadow: 0 0 10px rgba(0, 174, 255, 0.5);
 }
 
 .subtitle {
     text-align: center;
-    color: #94a3b8;
-    margin-bottom: 40px;
-    font-size: 1em;
-    letter-spacing: 0.5px;
-    animation: fadeInUp 1s ease-out 0.3s both;
+    color: #cccccc; /* Light gray text */
+    margin-bottom: 30px;
+    font-size: 0.95em;
+}
+
+.download-section {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.08); /* Subtle light semi-transparent */
+    border-radius: 8px;
+    border-left: 4px solid #00aeff; /* Accent blue */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    opacity: 0; /* For fadeInUp animation */
+    transform: translateY(20px); /* For fadeInUp animation */
+    animation: fadeInUp 0.5s ease-out forwards;
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* 下載區塊玻璃擬態 */
-.download-section {
-    margin-bottom: 20px;
-    padding: 25px;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(5px);
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    animation: sectionFadeIn 0.6s ease-out both;
-}
-
-.download-section:nth-child(odd) { animation-delay: 0.1s; }
-.download-section:nth-child(even) { animation-delay: 0.2s; }
-
-@keyframes sectionFadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.download-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
-    transition: left 0.6s ease;
-}
-
-.download-section:hover::before {
-    left: 100%;
-}
-
 .download-section:hover {
-    transform: translateY(-5px) scale(1.02);
-    background: rgba(147, 197, 253, 0.1);
-    border-color: rgba(147, 197, 253, 0.3);
-    box-shadow: 0 10px 40px rgba(147, 197, 253, 0.2);
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 6px 20px rgba(0, 174, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.12);
 }
 
 .download-section h2 {
-    color: #93c5fd;
-    font-size: 1.4em;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.download-section h2::before {
-    content: '▶';
-    font-size: 0.8em;
-    animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.7; }
+    color: #00aeff; /* Accent blue */
+    font-size: 1.3em;
+    margin-bottom: 10px;
 }
 
 .link-wrapper {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
 .download-section a {
-    color: #60a5fa;
+    color: #87cefa; /* Light sky blue for links */
     text-decoration: none;
     word-break: break-all;
     flex: 1;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 .download-section a:hover {
-    color: #93c5fd;
-    text-shadow: 0 0 10px rgba(147, 197, 253, 0.5);
+    text-decoration: underline;
+    color: #ffffff; /* White on hover */
 }
 
-/* 按鈕樣式增強 */
 .copy-btn {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    background-color: #00aeff;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 8px 15px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 0.9em;
-    font-weight: 500;
     transition: all 0.3s ease;
     white-space: nowrap;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-}
-
-.copy-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-.copy-btn:hover::before {
-    width: 300px;
-    height: 300px;
 }
 
 .copy-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
+    background-color: #007acc;
+    transform: scale(1.05);
 }
 
 .copy-btn.copied {
-    background: linear-gradient(135deg, #10b981, #059669);
-    animation: successPulse 0.5s ease;
-}
-
-@keyframes successPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+    background-color: #28a745; /* Green for success */
 }
 
 .extra-info {
-    margin-top: 15px;
-    color: #94a3b8;
+    margin-top: 10px;
+    color: #bbbbbb; /* Lighter gray */
     font-size: 0.9em;
     display: flex;
     align-items: center;
@@ -297,40 +144,38 @@ h1 {
 }
 
 .password {
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.2));
-    border: 1px solid rgba(251, 191, 36, 0.3);
-    padding: 6px 12px;
-    border-radius: 8px;
+    background-color: rgba(255, 223, 186, 0.2); /* Light orange, semi-transparent */
+    padding: 5px 10px;
+    border-radius: 4px;
     display: inline-block;
     font-family: monospace;
-    color: #fbbf24;
+    color: #ffd700; /* Gold/Yellow for password */
     cursor: pointer;
     transition: all 0.3s ease;
-    position: relative;
+    border: 1px solid rgba(255, 215, 0, 0.5);
 }
 
 .password:hover {
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.3));
+    background-color: rgba(255, 223, 186, 0.3);
     transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+    color: #fff;
 }
 
-/* Toast 通知增強 */
 .toast {
     position: fixed;
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(10px);
+    background-color: rgba(34, 34, 34, 0.9); /* Darker, slightly transparent toast */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     color: white;
-    padding: 18px 30px;
-    border-radius: 12px;
-    border: 1px solid rgba(147, 197, 253, 0.3);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    padding: 15px 25px;
+    border-radius: 8px;
     opacity: 0;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .toast.show {
@@ -338,52 +183,37 @@ h1 {
     opacity: 1;
 }
 
-/* 全部複製按鈕 */
 .download-all {
-    background: linear-gradient(135deg, #10b981, #059669);
+    background-color: #28a745; /* Green for main action */
     color: white;
     border: none;
-    padding: 15px 40px;
-    border-radius: 12px;
+    padding: 12px 30px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 1.1em;
-    font-weight: 600;
-    margin: 40px auto 0;
+    margin: 40px auto 10px; /* Adjusted margin */
     display: block;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
-    position: relative;
-    overflow: hidden;
-}
-
-.download-all::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.6s ease;
-}
-
-.download-all:hover::after {
-    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.4);
 }
 
 .download-all:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.6);
+    background-color: #218838;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.5);
 }
 
-/* 波紋效果增強 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .ripple {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(147, 197, 253, 0.6) 0%, transparent 70%);
+    background-color: rgba(0, 174, 255, 0.3); /* Brighter ripple */
     transform: scale(0);
-    animation: rippleEffect 0.8s ease-out;
+    animation: rippleEffect 0.6s ease-out;
 }
 
 @keyframes rippleEffect {
@@ -393,11 +223,13 @@ h1 {
     }
 }
 
-/* 響應式設計 */
 @media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
     .container {
-        margin: 20px;
         padding: 20px;
+        margin: 10px;
     }
     
     h1 {
@@ -405,7 +237,7 @@ h1 {
     }
     
     .download-section {
-        padding: 20px;
+        padding: 15px;
     }
     
     .link-wrapper {
@@ -417,37 +249,8 @@ h1 {
         width: 100%;
         margin-top: 10px;
     }
-}
-
-/* 加載動畫 */
-.loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #0a0a0a;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.5s ease;
-}
-
-.loader.hide {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.loader-circle {
-    width: 50px;
-    height: 50px;
-    border: 3px solid rgba(147, 197, 253, 0.2);
-    border-top-color: #93c5fd;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
+     .download-all {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
 }
