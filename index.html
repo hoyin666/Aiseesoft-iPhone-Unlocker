@@ -1,88 +1,415 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aiseesoft iPhone Unlocker 無限裝置版 下載連結</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aiseesoft iPhone Unlocker 無限裝置版 下載連結</title>
+
+  <!-- tsParticles CDN (用來做粒子背景) -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.3.4/tsparticles.bundle.min.js"></script>
+
+  <style>
+    /* 全站重置 */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; height:100%; overflow-x:hidden; font-family:-apple-system, BlinkMacSystemFont, 'Microsoft JhengHei','Segoe UI', Roboto, sans-serif; }
+
+    /* 背景圖與深色遮罩 */
+    body {
+      position: relative;
+      background: url('http://jpg.novex.dpdns.org/bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+    body::before {
+      content:"";
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 0;
+    }
+
+    /* tsParticles 畫布 */
+    #tsparticles {
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      z-index: 1;
+    }
+
+    /* 主體容器 */
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      animation: fadeInUp 1s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity:0; transform: translateY(30px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 2.5em;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      text-align: center;
+      font-size:1em;
+      color: #ddd;
+      margin-bottom: 40px;
+    }
+
+    /* 下載區塊 */
+    .download-section {
+      margin-bottom: 20px;
+      padding: 20px;
+      background-color: rgba(248,249,250,0.1);
+      border-left: 4px solid #007bff;
+      transition: all .3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .download-section:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0,123,255,.2);
+      background-color: rgba(231,243,255,0.1);
+    }
+    .download-section h2 {
+      color:#00aaff;
+      font-size:1.3em;
+      margin-bottom:10px;
+    }
+    .link-wrapper {
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .download-section a {
+      flex:1;
+      word-break:break-all;
+      color:#99ddff;
+      text-decoration:none;
+    }
+    .download-section a:hover {
+      text-decoration:underline;
+      color:#66bbff;
+    }
+    .copy-btn {
+      background:#007bff;
+      color:#fff;
+      border:none;
+      padding:8px 15px;
+      border-radius:5px;
+      cursor:pointer;
+      font-size:.9em;
+      transition: all .3s;
+    }
+    .copy-btn:hover { background:#0056b3; transform:scale(1.05); }
+    .copy-btn.copied { background:#28a745!important; }
+    .extra-info {
+      margin-top:10px;
+      font-size:.9em;
+      color:#ddd;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .password {
+      background: rgba(255,255,255,0.2);
+      padding:5px 10px;
+      border-radius:4px;
+      cursor:pointer;
+      font-family:monospace;
+      transition: all .3s;
+    }
+    .password:hover { background: rgba(255,255,255,0.4); transform:scale(1.05); }
+
+    /* 複製所有連結 */
+    .download-all {
+      display:block;
+      margin:30px auto 0;
+      padding:12px 30px;
+      font-size:1.1em;
+      border:none;
+      border-radius:5px;
+      background:#28a745;
+      color:#fff;
+      cursor:pointer;
+      box-shadow:0 2px 5px rgba(0,0,0,0.3);
+      transition:all .3s;
+    }
+    .download-all:hover {
+      background:#218838;
+      transform:scale(1.05);
+      box-shadow:0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    /* Toast 提示 */
+    .toast {
+      position: fixed;
+      bottom:30px;
+      left:50%;
+      transform:translateX(-50%) translateY(100px);
+      background:#333;
+      color:#fff;
+      padding:15px 25px;
+      border-radius:5px;
+      opacity:0;
+      transition: all .3s;
+      z-index:3;
+    }
+    .toast.show {
+      transform:translateX(-50%) translateY(0);
+      opacity:1;
+    }
+
+    /* 向下箭頭提示 */
+    .scroll-down {
+      position:absolute;
+      left:50%;
+      bottom:20px;
+      transform:translateX(-50%);
+      z-index:2;
+      width:30px;
+      height:50px;
+      cursor:pointer;
+    }
+    .scroll-down::before {
+      content:"";
+      position:absolute;
+      top:0;
+      left:50%;
+      width:4px;
+      height:30px;
+      background:rgba(255,255,255,0.7);
+      transform:translateX(-50%);
+      border-radius:2px;
+    }
+    .scroll-down::after {
+      content:"";
+      position:absolute;
+      top:25px;
+      left:50%;
+      width:12px;
+      height:12px;
+      border-left:4px solid rgba(255,255,255,0.7);
+      border-bottom:4px solid rgba(255,255,255,0.7);
+      transform:translateX(-50%) rotate(-45deg);
+      animation: arrowBounce 1.5s infinite;
+    }
+    @keyframes arrowBounce {
+      0%   { transform:translateX(-50%) rotate(-45deg) translateY(0); }
+      50%  { transform:translateX(-50%) rotate(-45deg) translateY(8px); }
+      100% { transform:translateX(-50%) rotate(-45deg) translateY(0); }
+    }
+
+    /* 響應式 */
+    @media (max-width:600px){
+      .container { padding:30px 20px; }
+      h1 { font-size:1.8em; }
+      .link-wrapper { flex-direction:column; }
+      .copy-btn { width:100%; }
+    }
+  </style>
 </head>
-<body class="text-gray-200 font-sans leading-relaxed flex items-center justify-center min-h-screen p-4 sm:p-5">
-    <div class="container max-w-3xl w-full mx-auto rounded-xl shadow-2xl p-6 md:p-10">
-        <h1 class="text-3xl sm:text-4xl font-bold text-center mb-4 text-white">Aiseesoft iPhone Unlocker 無限裝置版 下載連結</h1>
-        <p id="subtitle" class="text-center text-gray-400 mb-8 text-sm sm:text-base">點擊複製連結，或直接點擊訪問</p>
-        
-        <div class="download-section rounded-lg p-4 sm:p-6" onclick="createRipple(event, this)">
-            <h2 class="text-xl sm:text-2xl font-semibold mb-3">自架構高速下載</h2>
-            <div class="link-wrapper flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
-                <a href="https://mdm.2o25shop.dpdns.org/download" target="_blank" class="download-link flex-1 py-2">
-                    https://mdm.2o25shop.dpdns.org/download
-                </a>
-                <button class="copy-btn text-white font-semibold py-2 px-4 rounded-md w-full sm:w-auto mt-2 sm:mt-0" onclick="copyToClipboard(event, 'https://mdm.2o25shop.dpdns.org/download')">
-                    複製連結
-                </button>
-            </div>
-        </div>
-        
-        <div class="download-section rounded-lg p-4 sm:p-6" onclick="createRipple(event, this)">
-            <h2 class="text-xl sm:text-2xl font-semibold mb-3">Google雲端</h2>
-            <div class="link-wrapper flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
-                <a href="https://drive.google.com/file/d/19lB6dEq4yyESN6R6GcIS0CqkrDHQXeX1/view?usp=drivesdk" target="_blank" class="download-link flex-1 py-2">
-                    https://drive.google.com/file/d/19lB6dEq4yyESN6R6GcIS0CqkrDHQXeX1/view?usp=drivesdk
-                </a>
-                <button class="copy-btn text-white font-semibold py-2 px-4 rounded-md w-full sm:w-auto mt-2 sm:mt-0" onclick="copyToClipboard(event, 'https://drive.google.com/file/d/19lB6dEq4yyESN6R6GcIS0CqkrDHQXeX1/view?usp=drivesdk')">
-                    複製連結
-                </button>
-            </div>
-        </div>
-        
-        <div class="download-section rounded-lg p-4 sm:p-6" onclick="createRipple(event, this)">
-            <h2 class="text-xl sm:text-2xl font-semibold mb-3">Proton 雲端</h2>
-            <div class="link-wrapper flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
-                <a href="https://drive.proton.me/urls/6A3Y3RETFM#FW2gjw0SIEPy" target="_blank" class="download-link flex-1 py-2">
-                    https://drive.proton.me/urls/6A3Y3RETFM#FW2gjw0SIEPy
-                </a>
-                <button class="copy-btn text-white font-semibold py-2 px-4 rounded-md w-full sm:w-auto mt-2 sm:mt-0" onclick="copyToClipboard(event, 'https://drive.proton.me/urls/6A3Y3RETFM#FW2gjw0SIEPy')">
-                    複製連結
-                </button>
-            </div>
-        </div>
-        
-        <div class="download-section rounded-lg p-4 sm:p-6" onclick="createRipple(event, this)">
-            <h2 class="text-xl sm:text-2xl font-semibold mb-3">Onedrive 雲端</h2>
-            <div class="link-wrapper flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
-                <a href="https://1drv.ms/u/c/9e8cd632594795fc/EYAW-S7-ssxOpApxf1id_HkBroLVThJ5x3dypXw-24U-XQ" target="_blank" class="download-link flex-1 py-2">
-                    https://1drv.ms/u/c/9e8cd632594795fc/EYAW-S7-ssxOpApxf1id_HkBroLVThJ5x3dypXw-24U-XQ
-                </a>
-                <button class="copy-btn text-white font-semibold py-2 px-4 rounded-md w-full sm:w-auto mt-2 sm:mt-0" onclick="copyToClipboard(event, 'https://1drv.ms/u/c/9e8cd632594795fc/EYAW-S7-ssxOpApxf1id_HkBroLVThJ5x3dypXw-24U-XQ')">
-                    複製連結
-                </button>
-            </div>
-        </div>
-        
-        <div class="download-section rounded-lg p-4 sm:p-6" onclick="createRipple(event, this)">
-            <h2 class="text-xl sm:text-2xl font-semibold mb-3">百度網盤</h2>
-            <div class="link-wrapper flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
-                <a href="https://pan.baidu.com/s/1qQfLLa1DOTnWCl47Ze4gBg?pwd=tool" target="_blank" class="download-link flex-1 py-2">
-                    https://pan.baidu.com/s/1qQfLLa1DOTnWCl47Ze4gBg?pwd=tool
-                </a>
-                <button class="copy-btn text-white font-semibold py-2 px-4 rounded-md w-full sm:w-auto mt-2 sm:mt-0" onclick="copyToClipboard(event, 'https://pan.baidu.com/s/1qQfLLa1DOTnWCl47Ze4gBg?pwd=tool')">
-                    複製連結
-                </button>
-            </div>
-            <div class="extra-info mt-4 text-gray-400 text-sm flex items-center gap-2">
-                提取碼：<span class="password font-mono py-1 px-3 rounded cursor-pointer" onclick="copyPassword(event, 'tool')">tool</span>
-                <span class="text-xs text-gray-500">點擊複製提取碼</span>
-            </div>
-        </div>
-        
-        <button class="download-all font-bold py-3 px-8 rounded-lg mt-10 mx-auto block text-white" onclick="copyAllLinks()">
-            複製所有連結
+
+<body>
+  <!-- tsParticles 畫布 -->
+  <div id="tsparticles"></div>
+
+  <div class="container">
+    <h1>Aiseesoft iPhone Unlocker 無限裝置版 下載連結</h1>
+    <p class="subtitle">點擊複製連結，或直接點擊訪問</p>
+
+    <!-- 自架構高速下載 -->
+    <div class="download-section" onclick="createRipple(event,this)">
+      <h2>自架構高速下載</h2>
+      <div class="link-wrapper">
+        <a href="https://mdm.2o25shop.dpdns.org/download" target="_blank">
+          https://mdm.2o25shop.dpdns.org/download
+        </a>
+        <button class="copy-btn"
+          onclick="copyToClipboard(event,'https://mdm.2o25shop.dpdns.org/download')">
+          複製連結
         </button>
+      </div>
     </div>
-    
-    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 py-3 px-6 rounded-lg text-white shadow-xl opacity-0 transition-all duration-400 ease-in-out z-50"></div>
-    
-    <script src="script.js"></script>
+
+    <!-- Google 雲端 -->
+    <div class="download-section" onclick="createRipple(event,this)">
+      <h2>Google 雲端</h2>
+      <div class="link-wrapper">
+        <a href="https://drive.google.com/file/d/19lB6dEq4yyESN6R6GcIS0CqkrDHQXeX1/view?usp=drivesdk"
+           target="_blank">
+          https://drive.google.com/file/d/19lB6dEq4yyESN6R6GcIS0CqkrDHQXeX1/view?usp=drivesdk
+        </a>
+        <button class="copy-btn"
+          onclick="copyToClipboard(event,'https://drive.google.com/file/d/19lB6dEq4yyESN6R6GcIS0CqkrDHQXeX1/view?usp=drivesdk')">
+          複製連結
+        </button>
+      </div>
+    </div>
+
+    <!-- Proton 雲端 -->
+    <div class="download-section" onclick="createRipple(event,this)">
+      <h2>Proton 雲端</h2>
+      <div class="link-wrapper">
+        <a href="https://drive.proton.me/urls/6A3Y3RETFM#FW2gjw0SIEPy" target="_blank">
+          https://drive.proton.me/urls/6A3Y3RETFM#FW2gjw0SIEPy
+        </a>
+        <button class="copy-btn"
+          onclick="copyToClipboard(event,'https://drive.proton.me/urls/6A3Y3RETFM#FW2gjw0SIEPy')">
+          複製連結
+        </button>
+      </div>
+    </div>
+
+    <!-- Onedrive 雲端 -->
+    <div class="download-section" onclick="createRipple(event,this)">
+      <h2>Onedrive 雲端</h2>
+      <div class="link-wrapper">
+        <a href="https://1drv.ms/u/c/9e8cd632594795fc/EYAW-S7-ssxOpApxf1id_HkBroLVThJ5x3dypXw-24U-XQ"
+           target="_blank">
+          https://1drv.ms/u/c/9e8cd632594795fc/EYAW-S7-ssxOpApxf1id_HkBroLVThJ5x3dypXw-24U-XQ
+        </a>
+        <button class="copy-btn"
+          onclick="copyToClipboard(event,'https://1drv.ms/u/c/9e8cd632594795fc/EYAW-S7-ssxOpApxf1id_HkBroLVThJ5x3dypXw-24U-XQ')">
+          複製連結
+        </button>
+      </div>
+    </div>
+
+    <!-- 百度網盤 -->
+    <div class="download-section" onclick="createRipple(event,this)">
+      <h2>百度網盤</h2>
+      <div class="link-wrapper">
+        <a href="https://pan.baidu.com/s/1qQfLLa1DOTnWCl47Ze4gBg?pwd=tool" target="_blank">
+          https://pan.baidu.com/s/1qQfLLa1DOTnWCl47Ze4gBg?pwd=tool
+        </a>
+        <button class="copy-btn"
+          onclick="copyToClipboard(event,'https://pan.baidu.com/s/1qQfLLa1DOTnWCl47Ze4gBg?pwd=tool')">
+          複製連結
+        </button>
+      </div>
+      <div class="extra-info">
+        提取碼：
+        <span class="password" onclick="copyPassword(event,'tool')">tool</span>
+        <span style="font-size:0.8em; color:#aaa;">(點擊複製提取碼)</span>
+      </div>
+    </div>
+
+    <!-- 複製所有連結 -->
+    <button class="download-all" onclick="copyAllLinks()">
+      複製所有連結
+    </button>
+
+    <!-- 向下箭頭提示 -->
+    <div class="scroll-down"
+         onclick="window.scrollBy({ top: window.innerHeight * 0.6, behavior: 'smooth' })">
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // 初始化 tsParticles
+    tsParticles.load("tsparticles", {
+      fpsLimit: 60,
+      particles: {
+        number: { value: 50, density: { enable: true, area: 800 } },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.3, random: true },
+        size: { value: 3, random: true },
+        move: {
+          enable: true,
+          speed: 0.6,
+          direction: "none",
+          random: false,
+          straight: false,
+          outModes: { default: "out" }
+        }
+      },
+      interactivity: {
+        detectsOn: "canvas",
+        events: { onHover: { enable: false }, onClick: { enable: false } }
+      },
+      detectRetina: true
+    });
+
+    // 複製連結
+    function copyToClipboard(e, text) {
+      e.stopPropagation();
+      navigator.clipboard.writeText(text).then(()=>{
+        const btn = e.target;
+        btn.textContent = '已複製！';
+        btn.classList.add('copied');
+        showToast('連結已複製到剪貼板！');
+        setTimeout(()=>{
+          btn.textContent = '複製連結';
+          btn.classList.remove('copied');
+        },2000);
+      });
+    }
+
+    // 複製提取碼
+    function copyPassword(e, pwd) {
+      e.stopPropagation();
+      navigator.clipboard.writeText(pwd).then(()=>{
+        showToast('提取碼已複製！');
+      });
+    }
+
+    // 一次複製所有連結
+    function copyAllLinks() {
+      const allLinks = `自架構高速下載：
+https://mdm.2o25shop.dpdns.org/download
+
+Google 雲端：
+https://drive.google.com/file/d/19lB6dEq4yyESN6R6GcIS0CqkrDHQXeX1/view?usp=drivesdk
+
+Proton 雲端：
+https://drive.proton.me/urls/6A3Y3RETFM#FW2gjw0SIEPy
+
+Onedrive 雲端：
+https://1drv.ms/u/c/9e8cd632594795fc/EYAW-S7-ssxOpApxf1id_HkBroLVThJ5x3dypXw-24U-XQ
+
+百度網盤：
+https://pan.baidu.com/s/1qQfLLa1DOTnWCl47Ze4gBg?pwd=tool
+提取碼: tool`;
+      navigator.clipboard.writeText(allLinks).then(()=>{
+        showToast('所有連結已複製到剪貼板！');
+      });
+    }
+
+    // Toast 顯示
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(()=> t.classList.remove('show'), 3000);
+    }
+
+    // 點擊波紋效果
+    function createRipple(e, el) {
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const rect = el.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      el.appendChild(ripple);
+      setTimeout(()=> ripple.remove(), 600);
+    }
+  </script>
 </body>
 </html>
