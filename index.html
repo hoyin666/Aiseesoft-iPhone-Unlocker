@@ -4,24 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aiseesoft iPhone Unlocker 無限裝置版 下載連結</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- 加載動畫 -->
-    <div class="loader" id="loader">
-        <div class="loader-circle"></div>
+    <div class="background-layer">
+        <canvas id="particle-canvas"></canvas>
     </div>
-    
-    <!-- 背景圖片 -->
-    <div class="background-wrapper"></div>
-    <div class="overlay"></div>
-    
-    <!-- 粒子效果 -->
-    <div class="particles" id="particles"></div>
-    
+
     <div class="container">
-        <h1>Aiseesoft iPhone Unlocker 無限裝置版</h1>
-        <p class="subtitle">點擊複製連結，或直接點擊訪問下載</p>
+        <h1>Aiseesoft iPhone Unlocker 無限裝置版 下載連結</h1>
+        <p class="subtitle">點擊複製連結，或直接點擊訪問</p>
         
         <div class="download-section" onclick="createRipple(event, this)">
             <h2>自架構高速下載</h2>
@@ -83,7 +75,7 @@
             </div>
             <div class="extra-info">
                 提取碼：<span class="password" onclick="copyPassword(event, 'tool')">tool</span>
-                <span style="color: #64748b; font-size: 0.8em;">點擊複製提取碼</span>
+                <span style="color: #999; font-size: 0.8em;">點擊複製提取碼</span>
             </div>
         </div>
         
@@ -94,6 +86,6 @@
     
     <div class="toast" id="toast"></div>
     
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
