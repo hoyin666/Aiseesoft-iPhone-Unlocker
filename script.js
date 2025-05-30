@@ -1,8 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('.download-section');
-    sections.forEach((section, index) => {
-        section.style.animationDelay = `${index * 0.12}s`;
+    const elementsToAnimate = [
+        { selector: 'h1', animationName: 'fadeInUp', duration: 600, baseDelay: 0 },
+        { selector: '#subtitle', animationName: 'fadeInUp', duration: 600, baseDelay: 150 },
+    ];
+
+    let accumulatedDelay = 0;
+
+    elementsToAnimate.forEach(config => {
+        const elem = document.querySelector(config.selector);
+        if (elem) {
+            elem.style.animation = `${config.animationName} ${config.duration / 1000}s ${(config.baseDelay) / 1000}s ease-out forwards`;
+            accumulatedDelay = Math.max(accumulatedDelay, config.baseDelay + config.duration);
+        }
     });
+    
+    let cardsStartDelay = accumulatedDelay + 100; 
+
+    const downloadSections = document.querySelectorAll('.download-section');
+    const sectionAnimationDuration = 500;
+    const sectionStaggerOffset = 120;
+
+    downloadSections.forEach((section, index) => {
+        const delayForThisSection = cardsStartDelay + (index * sectionStaggerOffset);
+        section.style.animation = `fadeInUp ${sectionAnimationDuration / 1000}s ${delayForThisSection / 1000}s ease-out forwards`;
+    });
+
+    let lastCardFinishTime = 0;
+    if (downloadSections.length > 0) {
+        lastCardFinishTime = cardsStartDelay + ((downloadSections.length - 1) * sectionStaggerOffset) + sectionAnimationDuration;
+    } else {
+        lastCardFinishTime = accumulatedDelay;
+    }
+    
+    const downloadAllButton = document.querySelector('.download-all');
+    if (downloadAllButton) {
+        const buttonDelay = lastCardFinishTime + 150;
+        const buttonAnimationDuration = 600;
+        downloadAllButton.style.animation = `fadeInUp ${buttonAnimationDuration / 1000}s ${buttonDelay / 1000}s ease-out forwards`;
+    }
 });
 
 function copyToClipboard(event, text) {
@@ -24,6 +59,12 @@ function copyToClipboard(event, text) {
 function copyPassword(event, password) {
     event.stopPropagation();
     navigator.clipboard.writeText(password).then(() => {
+        const passwordSpan = event.target.closest('.password');
+        const originalText = passwordSpan.textContent;
+        passwordSpan.textContent = '已複製!';
+        setTimeout(() => {
+            passwordSpan.textContent = originalText;
+        }, 1500);
         showToast('提取碼已複製！');
     });
 }
@@ -64,6 +105,11 @@ function showToast(message) {
 
 function createRipple(event, element) {
     if (!element.classList.contains('download-section')) return;
+
+    const existingRipple = element.querySelector('.ripple');
+    if (existingRipple) {
+        existingRipple.remove();
+    }
 
     const ripple = document.createElement('span');
     ripple.classList.add('ripple');
